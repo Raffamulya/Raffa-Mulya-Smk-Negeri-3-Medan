@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Calculator — Percent & Cotangent</title>
+<style>
+    img {
+        width: 30px;
+    }
+:root{font-family:Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;}
+body{display:flex;align-items:center;justify-content:center;height:100vh;margin:0;background:#2200e2}
+.calc{width:340px;background:#aeaffa;border-radius:12px;box-shadow:0 8px 30px rgba(0,0,0,0.08);padding:18px;display:flex;flex-direction:column;align-items:center}
+.display{background:#ffffff;color:#000000;border-radius:8px;padding:12px;font-size:24px;text-align:right;min-height:56px;word-wrap:break-word;width:100%}
+.row{display:flex;gap:8px;margin-top:10px;width:100%}
+button{flex:1;padding:12px;border-radius:8px;border:0;background:#08f730;font-size:16px;cursor:pointer}
+button.op{background:#ff1111;color:#fff}
+button.func{background:#ffa600;color:#fff}
+button.wide{flex:2.6}
+.small-muted{font-size:12px;color:#ffc400;margin-top:8px;text-align:center}
+.mode-toggle{display:flex;gap:6px;align-items:center;justify-content:center;margin-top:8px}
+.mode-toggle button{padding:6px 10px;font-size:13px}
+.label{margin-top:14px;font-size:14px;color:#00eeff;text-align:center;font-weight:500}
+</style>
+</head>
+
+<body>
+<div class="calc">
+<div id="display" class="display">0</div>
+<div class="row">
+<button id="clear" class="func">C</button>
+<button id="del" class="func"><img src="Delete Icon (White).png" alt=""></button>
+<button id="percent" class="func">%</button>
+<button data-func="cot" class="func">cot</button>
+</div>
+<div class="row">
+<button data-func="sin">sin</button>
+<button data-func="cos">cos</button>
+<button data-func="tan">tan</button>
+<button data-op="/" class="op">÷</button>
+</div>
+<div class="row">
+<button data-digit="7">7</button>
+<button data-digit="8">8</button>
+<button data-digit="9">9</button>
+<button data-op="*" class="op">×</button>
+</div>
+<div class="row">
+<button data-digit="4">4</button>
+<button data-digit="5">5</button>
+<button data-digit="6">6</button>
+<button data-op="-" class="op">−</button>
+</div>
+<div class="row">
+<button data-digit="1">1</button>
+<button data-digit="2">2</button>
+<button data-digit="3">3</button>
+<button data-op="+" class="op">+</button>
+</div>
+<div class="row">
+<button id="dot">•</button>
+<button data-digit="0" class="wide">0</button>
+<button id="equals" class="op">=</button>
+</div>
+<div class="mode-toggle">
+<div>Mode:</div>
+<button id="deg" aria-pressed="true">Deg</button>
+<button id="rad" aria-pressed="false">Rad</button>
+</div>
+<div class="small-muted">• % = bagi 100 pada angka saat ini • cot(x) = 1/tan(x)</div>
+<!-- Label Nama dan Kelas -->
+<div class="label">Nama: RAFFA AL HABSYI MULYA</div>
+<div class="label">Kelas: XI RPL 1</div>
+</div>
+<script>
+(function(){
+const displayEl = document.getElementById('display');
+let expr = '';
+let justEvaluated = false;
+let mode = 'deg'; // or 'rad'
+function updateDisplay(text){ displayEl.textContent = text; }
+function appendDigit(d){
+if(justEvaluated){ expr = ''; justEvaluated = false; }
+expr += d;
+updateDisplay(expr);
+}
+function appendOp(op){
+if(justEvaluated) justEvaluated = false;
+if(expr === '' && op === '-') { expr = '-'; updateDisplay(expr); return; }
+if(expr === '') return;
+if(/[+\-*/]$/.test(expr)) expr = expr.slice(0,-1);
+expr += op;
+updateDisplay(expr);
+}
+function appendFunc(fn){
+if(justEvaluated){ expr = ''; justEvaluated = false; }
+expr += fn + '(';
+updateDisplay(expr);
+}
+function clearAll(){ expr = ''; updateDisplay('0'); }
+function delLast(){ if(justEvaluated){ expr = ''; updateDisplay('0'); return; } expr = expr.slice(0,-1); updateDisplay(expr || '0'); }
+function applyPercent(){
+if(expr === '') return;
+try{
+const val = evaluateExpression(expr);
+const percentVal = val/100;
+expr = String(percentVal);
+updateDisplay(expr);
+justEvaluated = true;
+}catch(e){
+const re = /(\d+(?:\.\d+)?)$/.exec(expr);
+if(re){
+const num = Number(re[1]);
+const swapped = String(num/100);
+expr = expr.slice(0,re.index) + swapped;
+updateDisplay(expr);
+}
+}
+}
+function evaluateExpression(input){
+if(input.trim() === '') return 0;
+const deg = (mode === 'deg');
+const sin = x => Math.sin(deg ? x * Math.PI/180 : x);
+
+const cos = x => Math.cos(deg ? x * Math.PI/180 : x);
+const tan = x => Math.tan(deg ? x * Math.PI/180 : x);
+const cot = x => 1 / Math.tan(deg ? x * Math.PI/180 : x);
+const safe = input.replace(/×/g,'*').replace(/÷/g,'/');
+const fn = new Function('sin','cos','tan','cot','Math', 'return ' + safe + ';');
+return fn(sin,cos,tan,cot,Math);
+}
+document.body.addEventListener('click', e => {
+const t = e.target;
+if(t.matches('[data-digit]')){ appendDigit(t.getAttribute('data-digit')); }
+else if(t.matches('[data-op]')){ appendOp(t.getAttribute('data-op')); }
+else if(t.id === 'dot'){ appendDigit('.'); }
+else if(t.id === 'clear'){ clearAll(); }
+else if(t.id === 'del'){ delLast(); }
+else if(t.id === 'percent'){ applyPercent(); }
+else if(t.matches('[data-func]')){ appendFunc(t.getAttribute('data-func')); }
+else if(t.id === 'equals'){
+try{
+const result = evaluateExpression(expr);
+expr = String(result);
+updateDisplay(expr);
+justEvaluated = true;
+}catch(err){ updateDisplay('Error'); expr = ''; }
+}
+else if(t.id === 'deg'){ mode = 'deg'; document.getElementById('deg').setAttribute('aria-pressed','true'); document.getElementById('rad').setAttribute('aria-pressed','false'); }
+else if(t.id === 'rad'){ mode = 'rad'; document.getElementById('rad').setAttribute('aria-pressed','true'); document.getElementById('deg').setAttribute('aria-pressed','false'); }
+});
+window.addEventListener('keydown', ev => {
+const k = ev.key;
+if(/^[0-9]$/.test(k)) appendDigit(k);
+else if(k === '.') appendDigit('.');
+else if(k === '%') applyPercent();
+else if(k === 'Backspace') delLast();
+else if(k === 'Enter' || k === '='){
+ev.preventDefault(); document.getElementById('equals').click();
+}
+else if(k === '+'||k==='-'||k==='*'||k==='/' ) appendOp(k);
+});
+})();
+</script>
+</body>
+</html>
