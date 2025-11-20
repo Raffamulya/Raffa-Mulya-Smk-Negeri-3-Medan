@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Gunung Sinabung</title>
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                line-height: 1.6;
+                margin: 0;
+                padding: 20px;
+                background-color: #7003ff;
+                /* Slightly darker background for better contrast */
+                color: #ffffff;
+                /* White text for better readability */
+            }
+
+            h1 {
+                color: #252424;
+                /* Darker header text */
+                text-align: center;
+                margin-bottom: 20px;
+                /* Add some space below the header */
+            }
+
+            .info {
+                background: #01e1ff;
+                /* Light blue background */
+                padding: 30px;
+                /* Increased padding for better spacing */
+                border-radius: 10px;
+                /* Slightly rounded corners */
+                margin-bottom: 30px;
+                /* Increased margin for better spacing */
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            }
+
+            .info h2 {
+                color: #0400ff;
+                /* Golden yellow heading */
+                margin-bottom: 10px;
+                /* Space below subheadings */
+            }
+
+            /* Add some basic styling for images */
+            img {
+                max-width: 100%;
+                height: auto;
+                display: block;
+                /* Prevents extra space below images */
+                margin: 20px auto;
+                /* Center images */
+            }
+
+            /* Responsive design for smaller screens */
+            @media (max-width: 768px) {
+                .info {
+                    padding: 20px;
+                    /* Reduce padding on smaller screens */
+                }
+            }
+        </style>
+    </head>
+
+
+    <body>
+        <h1>Gunung Sinabung</h1>
+        <div class="info">
+            <h2>Profil</h2>
+            <ul>
+                <li><span>Nama Lengkap: RAFFA AL HABSYI MULYA</span></li>
+                <li><span>Kelas: XI RPL 1</span></li>
+                <li><span>Alamat: Tembung Pasar 3 Jl.Bhinneka Tunggal Ika</span></li>
+                <li><span>No. Telepon: 087243879552</span></li>
+                <li><span>Email: Raffa@gmail.com</span></li>
+            </u1>
+            <p> </p>
+
+        </div>
+        <div class="info">
+            <h2>Gunung Sinabung</h2>
+            <img src="https://img.jakpost.net/c/2020/08/23/2020_08_23_102952_1598166226._large.jpg" alt="Mount Sinabung Image 2">
+            <p>Gunung Sinabung (bahasa Batak Karo: Deleng Sinabung) adalah
+                gunung api di Dataran Tinggi Karo, Kabupaten Karo, Sumatera
+                Utara, Indonesia. Sinabung bersama Gunung Sibayak di dekatnya
+                adalah dua gunung berapi aktif di Sumatera Utara dan
+                menjadi puncak tertinggi ke 2 di provinsi Sumatera Utara setelah
+                Gunung Sibuatan. Ketinggian gunung ini adalah 2.451
+                meter.[1]
+
+                Gunung ini tidak pernah tercatat meletus sejak tahun 1600.[2]
+                Letusan terakhirnya diperkirakan sekitar tahun 800. Tetapi
+                beberapa tahun silam, Gunung Sinabung mendadak aktif kembali
+                dengan meletus pada tanggal 27 Agustus 2010.</p>
+        </div>
+
+    </body>
+
+</html>
