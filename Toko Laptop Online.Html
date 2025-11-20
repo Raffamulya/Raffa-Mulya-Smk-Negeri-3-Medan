@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Toko Laptop Online</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0; padding: 0;
+            background-color: #f8f8f8;
+        }
+
+        /* ===== HEADER & NAVBAR ===== */
+        header {
+            background-color: #004aad;
+            color: white;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        header h1 { margin: 0; }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin-left: 10px;
+            padding: 8px 15px;
+            border-radius: 5px;
+            transition: 0.3s;
+        }
+        nav a:hover {
+            background-color: #0066ff;
+        }
+        nav a.active {
+            background-color: #0066cc;
+            font-weight: bold;
+        }
+
+        /* ===== KONTEN ===== */
+        .container {
+            width: 90%;
+            margin: auto;
+            padding: 20px 0;
+        }
+        .products {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+        }
+        .product {
+            background-color: white;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            width: 300px;
+            margin: 15px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            text-align: center;
+            transition: 0.3s;
+        }
+        .product:hover {
+            transform: scale(1.05);
+        }
+        .product img {
+            width: 100%;
+            height: 200px;
+            border-radius: 10px 10px 0 0;
+            object-fit: cover;
+        }
+        .product h3 {
+            margin: 10px 0;
+        }
+        .product p {
+            color: #555;
+        }
+        .price {
+            color: #004aad;
+            font-weight: bold;
+            font-size: 18px;
+        }
+        button {
+            background-color: #004aad;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        button:hover {
+            background-color: #003a85;
+        }
+
+        /* ===== KERANJANG ===== */
+        #cart {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 30px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        /* ===== MODAL SPESIFIKASI ===== */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 10;
+            left: 0; top: 0;
+            width: 100%; height: 100%;
+            background: rgba(0,0,0,0.6);
+            justify-content: center;
+            align-items: center;
+        }
+        .modal-content {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            width: 90%;
+            max-width: 500px;
+            text-align: left;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        }
+        .modal-content h2 {
+            margin-top: 0;
+            color: #004aad;
+        }
+        .close-btn {
+            background: #ff3b3b;
+            color: white;
+            float: right;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            border: none;
+        }
+        .close-btn:hover {
+            background: #cc2e2e;
+        }
+
+        /* ===== FOOTER ===== */
+        footer {
+            text-align: center;
+            background-color: #004aad;
+            color: white;
+            padding: 15px;
+            margin-top: 30px;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>💻 Toko Laptop Online</h1>
+    <p>Temukan laptop impian Anda dengan harga terbaik!</p>
+    <nav>
+        <a href="Profil.Html">Profil Penjual</a>
+    </nav>
+</header>
+
+<div class="container">
+    </div>
+    <h2>Produk Terbaru</h2>
+    <div class="products" id="product-list">
+        <!-- Produk 1 -->
+        <div class="product">
+            <img src="https://dlcdnwebimgs.asus.com/gain/E90DE227-7002-48C1-A940-B6E952D0BCCC" alt="Asus ROG Zephyrus G14">
+            <h3>Asus ROG Zephyrus G14</h3>
+            <p>Laptop gaming dengan performa tinggi untuk para gamer sejati.</p>
+            <p class="price">Rp 24.999.000</p>
+            <button onclick="addToCart('Asus ROG Zephyrus G14', 24999000)">Tambah ke Keranjang</button>
+            <button onclick="showSpecs('Asus ROG Zephyrus G14')">Lihat Spesifikasi</button>
+        </div>
+
+        <!-- Produk 2 -->
+        <div class="product">
+            <img src="https://statik.tempo.co/data/2022/06/10/id_1116491/1116491_720.jpg" alt="MacBook Air M2">
+            <h3>MacBook Air M2</h3>
+            <p>Laptop ringan dan cepat dengan chip Apple M2 terbaru.</p>
+            <p class="price">Rp 18.999.000</p>
+            <button onclick="addToCart('MacBook Air M2', 18999000)">Tambah ke Keranjang</button>
+            <button onclick="showSpecs('MacBook Air M2')">Lihat Spesifikasi</button>
+        </div>
+
+        <!-- Produk 3 -->
+        <div class="product">
+            <img src="https://p2-ofp.static.pub//fes/cms/2024/08/28/fcd70qdguca5etsxhgazpeezkoam7p488088.png" alt="Lenovo ThinkPad X1 Carbon">
+            <h3>Lenovo ThinkPad X1 Carbon</h3>
+            <p>Laptop bisnis premium dengan desain elegan dan daya tahan tinggi.</p>
+            <p class="price">Rp 21.499.000</p>
+            <button onclick="addToCart('Lenovo ThinkPad X1 Carbon', 21499000)">Tambah ke Keranjang</button>
+            <button onclick="showSpecs('Lenovo ThinkPad X1 Carbon')">Lihat Spesifikasi</button>
+        </div>
+
+        <!-- Produk 4 -->
+        <div class="product">
+            <img src="https://id-media.apjonlinecdn.com/catalog/product/cache/b3b166914d87ce343d4dc5ec5117b502/c/0/c08932266.png" alt="HP Pavilion Aero 13">
+            <h3>HP Pavilion Aero 13</h3>
+            <p>Laptop ultrabook ringan dengan layar tajam dan performa efisien.</p>
+            <p class="price">Rp 13.499.000</p>
+            <button onclick="addToCart('HP Pavilion Aero 13', 13499000)">Tambah ke Keranjang</button>
+            <button onclick="showSpecs('HP Pavilion Aero 13')">Lihat Spesifikasi</button>
+        </div>
+    </div>
+
+    <div id="cart">
+        <h2>🛒 Keranjang Belanja</h2>
+        <ul id="cart-items"></ul>
+        <h3>Total: Rp <span id="cart-total">0</span></h3>
+        <button onclick="checkout()">Checkout</button>
+    </div>
+</div>
+
+<!-- Modal Spesifikasi -->
+<div class="modal" id="specModal">
+    <div class="modal-content">
+        <button class="close-btn" onclick="closeModal()">Tutup</button>
+        <h2 id="specTitle">Spesifikasi Laptop</h2>
+        <ul id="specList"></ul>
+    </div>
+</div>
+
+<footer>
+    <p>&copy; 2025 Toko Laptop Online | Dibuat oleh Raffa Al Habsyi Mulya</p>
+</footer>
+
+<script>
+    let cart = [];
+
+    // Data spesifikasi laptop
+    const specs = {
+        "Asus ROG Zephyrus G14": [
+            "Prosesor: AMD Ryzen 9 7940HS",
+            "GPU: NVIDIA GeForce RTX 4060 8GB",
+            "RAM: 16GB DDR5",
+            "Penyimpanan: 1TB SSD NVMe",
+            "Layar: 14\" QHD+ 165Hz"
+        ],
+        "MacBook Air M2": [
+            "Prosesor: Apple M2 Chip (8-core CPU, 10-core GPU)",
+            "RAM: 16GB Unified Memory",
+            "Penyimpanan: 512GB SSD",
+            "Layar: 13.6\" Retina Display",
+            "Baterai: Hingga 18 jam"
+        ],
+        "Lenovo ThinkPad X1 Carbon": [
+            "Prosesor: Intel Core i7-1360P",
+            "RAM: 16GB LPDDR5",
+            "Penyimpanan: 1TB SSD",
+            "Layar: 14\" WQHD+ Anti-glare",
+            "Berat: 1.12 kg"
+        ],
+        "HP Pavilion Aero 13": [
+            "Prosesor: AMD Ryzen 7 7735U",
+            "RAM: 16GB DDR5",
+            "Penyimpanan: 512GB SSD",
+            "Layar: 13.3\" WUXGA (1920x1200)",
+            "Berat: 970 gram"
+        ]
+    };
+
+    function addToCart(name, price) {
+        cart.push({ name, price });
+        renderCart();
+    }
+
+    function renderCart() {
+        const list = document.getElementById('cart-items');
+        list.innerHTML = '';
+        let total = 0;
+        cart.forEach(item => {
+            const li = document.createElement('li');
+            li.textContent = `${item.name} - Rp ${item.price.toLocaleString()}`;
+            list.appendChild(li);
+            total += item.price;
+        });
+        document.getElementById('cart-total').textContent = total.toLocaleString();
+    }
+
+    function checkout() {
+        if (cart.length === 0) {
+            alert("Keranjang masih kosong!");
+            return;
+        }
+        alert("Terima kasih telah berbelanja! Total belanja Anda: Rp " + 
+              cart.reduce((sum, item) => sum + item.price, 0).toLocaleString());
+        cart = [];
+        renderCart();
+    }
+
+    // Fungsi menampilkan spesifikasi
+    function showSpecs(name) {
+        const modal = document.getElementById('specModal');
+        const title = document.getElementById('specTitle');
+        const list = document.getElementById('specList');
+
+        title.textContent = name;
+        list.innerHTML = '';
+        specs[name].forEach(s => {
+            const li = document.createElement('li');
+            li.textContent = s;
+            list.appendChild(li);
+        });
+
+        modal.style.display = 'flex';
+    }
+
+    function closeModal() {
+        document.getElementById('specModal').style.display = 'none';
+    }
+
+    // Tutup modal jika klik di luar konten
+    window.onclick = function(event) {
+        const modal = document.getElementById('specModal');
+        if (event.target === modal) {
+            modal.style.display = 'none';
+        }
+    };
+</script>
+
+</body>
+</html>
